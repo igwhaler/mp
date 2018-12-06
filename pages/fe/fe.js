@@ -3,20 +3,31 @@
 const app = getApp()
 
 Page({
-  data: {
-    message: 123123
-  },
+  data: {},
+
   onLoad () {
-    console.log(this)
-    console.log(app)
-    console.log(wx)
+    wx.showShareMenu({
+      withShareTicket: true
+    })
   },
 
-  onUnload () {
-    console.log(123)
-  },
+  onShareAppMessage (res) {
+    return {
+      title: '123',
+      path: 'pages/fe/fe',
+      success (res) {
+        wx.getShareInfo({
+          shareTicket: res.shareTickets[0],
 
-  onShow () {
-    // console.log(app)
+          success (res) {
+            console.log('success', res)
+          },
+
+          fail (err) {
+            console.log('fail', err)
+          }
+        })
+      }
+    }
   }
 })
